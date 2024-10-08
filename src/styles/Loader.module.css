@@ -1,0 +1,81 @@
+.loader {
+    position: fixed; /* Change to fixed */
+  top: 0;          /* Cover the entire viewport */
+  left: 0;         
+  width: 100vw;    /* Full width */
+  height: 100vh;   /* Full height */
+  display: flex;   /* Center the loader */
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.8); /* Optional: Semi-transparent background */
+  z-index: 9999;   /* Ensure loader is above all content */
+  pointer-events: none;
+  }
+  
+  .loader:before,
+  .loader:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: block;
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 0.25em;
+    transform: translate(-50%, -50%);
+  }
+  
+  .loader:before {
+    animation: before8 2s infinite;
+  }
+  
+  .loader:after {
+    animation: after6 2s infinite;
+  }
+  
+  @keyframes before8 {
+    0% {
+      width: 0.5em;
+      box-shadow: 1em -0.5em rgba(82,42,39,0.75), -1em 0.5em rgba(199, 62, 29,0.75);
+    }
+    35% {
+      width: 2.5em;
+      box-shadow: 0 -0.5em rgba(82,42,39,0.75), 0 0.5em rgba(199, 62, 29,0.75);
+    }
+    70% {
+      width: 0.5em;
+      box-shadow: -1em -0.5em rgba(82,42,39,0.75), 1em 0.5em rgba(199, 62, 29,0.75);
+    }
+    100% {
+      box-shadow: 1em -0.5em rgba(82,42,39,0.75), -1em 0.5em rgba(199, 62, 29,0.75);
+    }
+  }
+  
+  @keyframes after6 {
+    0% {
+      height: 0.5em;
+      box-shadow: 0.5em 1em rgba(166, 212, 159,0.75), -0.5em -1em rgba(197, 152, 73,0.75);
+    }
+    35% {
+      height: 2.5em;
+      box-shadow: 0.5em 0 rgba(166, 212, 159,0.75), -0.5em 0 rgba(197, 152, 73,0.75);
+    }
+    70% {
+      height: 0.5em;
+      box-shadow: 0.5em -1em rgba(166, 212, 159,0.75), -0.5em 1em rgba(197, 152, 73,0.75);
+    }
+    100% {
+      box-shadow: 0.5em 1em rgba(166, 212, 159,0.75), -0.5em -1em rgba(197, 152, 73,0.75);
+    }
+  }
+  
+  .loader {
+    position: absolute;
+    top: calc(50% - 1.25em);
+    left: calc(50% - 1.25em);
+  }
+  
+  .blur {
+    filter: blur(5px); /* Keep the existing blur effect */
+    transition: filter 0.3s ease; /* Smooth transition effect */
+  }
