@@ -1,16 +1,11 @@
 .loader {
-    position: fixed; /* Change to fixed */
-  top: 0;          /* Cover the entire viewport */
-  left: 0;         
-  width: 100vw;    /* Full width */
-  height: 100vh;   /* Full height */
-  display: flex;   /* Center the loader */
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.8); /* Optional: Semi-transparent background */
-  z-index: 9999;   /* Ensure loader is above all content */
-  pointer-events: none;
-  }
+  position: absolute;
+  top: calc(50% - 1.25em);
+  left: calc(50% - 1.25em);
+  width: 2.5em;
+  height: 2.5em;
+  transform: rotate(165deg);
+}
   
   .loader:before,
   .loader:after {
@@ -75,7 +70,4 @@
     left: calc(50% - 1.25em);
   }
   
-  .blur {
-    filter: blur(5px); /* Keep the existing blur effect */
-    transition: filter 0.3s ease; /* Smooth transition effect */
-  }
+  
