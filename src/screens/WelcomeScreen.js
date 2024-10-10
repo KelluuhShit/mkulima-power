@@ -34,7 +34,7 @@ const WelcomeScreen = () => {
             <div className="absolute inset-0 bg-black bg-opacity-20" style={{ filter: 'brightness(0.1)' }}></div>
             
             {/* Overlay Container */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center p-6 rounded-lg bg-black bg-opacity-75">
+            <div className="absolute inset-0 flex flex-col items-center justify-center p-6 bg-black bg-opacity-75">
                 {/* Responsive Logo */}
                 <img 
                     src={logo} 
