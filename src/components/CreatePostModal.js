@@ -14,26 +14,27 @@ const CreatePostModal = ({ isOpen, onClose }) => {
 
     const formData = new FormData();
     formData.append('text', postText);
+    formData.append('userId', '1'); // Replace '1' with the actual user ID
     if (image) {
-      formData.append('image', image);
+        formData.append('image', image);
     }
 
     try {
-      const response = await axios.post('/api/posts/create', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+        const response = await axios.post('http://localhost:3000/api/posts/create', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
 
-      console.log(response.data); // Handle response data if needed
-      setPostText('');
-      setImage(null);
-      onClose(); // Close the modal after submission
+        console.log(response.data); // Handle response data if needed
+        setPostText('');
+        setImage(null);
+        onClose(); // Close the modal after submission
     } catch (error) {
-      console.error('Error creating post:', error);
-      // Handle error (e.g., show an error message to the user)
+        console.error('Error creating post:', error);
+        // Handle error (e.g., show an error message to the user)
     }
-  };
+};
 
   if (!isOpen) return null;
 
