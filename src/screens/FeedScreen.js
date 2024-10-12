@@ -36,13 +36,13 @@ const FeedScreen = () => {
 
   return (
     <div className="min-h-screen bg-[rgb(166,212,159)] flex flex-col text-center">
-      <div className=' bg-[rgb(166,212,159)] flex flex-row align-center justify-around mt-5 absolute left-0 right-0 ml-10 mr-10'>
-        <p className='font-bold'>Feed</p>
-        <div className='flex flex-row gap-5'>
-          <p>Recents</p>
-          <p>Popular</p>
+        <div className='w-3/5 flex flex-row justify-between bg-[rgb(166,212,159)] p-5 fixed'>
+              <p className='font-bold'>Feed</p>
+              <div className='flex flex-row gap-5'>
+                <p className='hover:underline cursor-pointer'>Recents</p>
+                <p className='hover:underline cursor-pointer'>Popular</p>
+              </div>
         </div>
-      </div>
 
       {/* Display posts here */}
       <div className="mt-5">
