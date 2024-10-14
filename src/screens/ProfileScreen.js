@@ -1,3 +1,4 @@
+// ProfileScreen.js
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../services/firebase';
@@ -6,7 +7,8 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../services/firebase';
 import profileImg from '../assets/profileImg.jpg';
 import Skeleton from '../components/Skeleton';
-import PostCreator from '../components/PostCreator'; // Import the refactored PostCreator component
+import ProfileImageUpload from '../components/ProfileImageUpload'; // Import the reusable component
+import PostCreator from '../components/PostCreator';
 
 const ProfileScreen = () => {
     const [uploadedImageSrc, setUploadedImageSrc] = useState(null);
@@ -14,7 +16,7 @@ const ProfileScreen = () => {
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
     const [activeIndex, setActiveIndex] = useState(1);
-    const [isModalOpen, setIsModalOpen] = useState(false); // Manage modal state here
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleLogout = async () => {
         await signOut(auth);
@@ -49,12 +51,11 @@ const ProfileScreen = () => {
             const imageUrl = URL.createObjectURL(file);
             setUploadedImageSrc(imageUrl);
         }
-        e.target.value = null;
+        e.target.value = null; // Reset input value to allow re-upload
     };
 
     const handleCreatePost = (postData) => {
         console.log('Post Created:', postData);
-        // Handle the post creation logic (e.g., saving to Firebase)
         setIsModalOpen(false);
     };
 
@@ -68,43 +69,12 @@ const ProfileScreen = () => {
                 </p>
             )}
 
-            <div className="flex flex-row items-center justify-center text-center mt-5 mb-1">
-                {isLoading ? (
-                    <Skeleton width="64px" height="64px" className="rounded-full" />
-                ) : (
-                    <img
-                        src={profileImg}
-                        alt="Profile"
-                        className="w-16 h-16 rounded-full object-cover"
-                    />
-                )}
-
-                <div
-                    className="bg-[rgb(156,179,128)] w-16 h-16 relative cursor-pointer rounded-full z-1 -translate-x-3"
-                    onClick={() => document.getElementById('fileInput').click()}
-                >
-                    <input
-                        id="fileInput"
-                        type="file"
-                        accept="image/*"
-                        className="absolute inset-0 opacity-0 cursor-pointer"
-                        onChange={handleImageUpload}
-                    />
-                    {isLoading ? (
-                        <Skeleton width="100%" height="64px" className="rounded-full" />
-                    ) : uploadedImageSrc ? (
-                        <img
-                            src={uploadedImageSrc}
-                            alt="Selected"
-                            className="absolute inset-0 w-full h-full rounded-full object-cover z-0"
-                        />
-                    ) : (
-                        <span className="flex items-center justify-center h-full text-gray-500">
-                            <i className="fa-regular fa-image"></i>
-                        </span>
-                    )}
-                </div>
-            </div>
+            <ProfileImageUpload 
+                isLoading={isLoading}
+                profileImg={profileImg}
+                uploadedImageSrc={uploadedImageSrc}
+                handleImageUpload={handleImageUpload}
+            />
 
             <p className="text-lg text-[rgb(82,42,39)] mt-5 text-center">
                 {isLoading ? (
@@ -124,7 +94,7 @@ const ProfileScreen = () => {
                         { icon: "fa-circle-plus", label: "Create Post" },
                         { icon: "fa-square-rss", label: "News Feed" },
                         { icon: "fa-comments", label: "Messages" },
-                        { icon: "fa-user-group", label: "Friends" },
+                        { icon: "fa-user-group", label: "Followers" },
                         { icon: "fa-object-group", label: "Forums" },
                         { icon: "fa-microphone-lines", label: "Meet" },
                         { icon: "fa-gear", label: "Customize" }
@@ -154,7 +124,6 @@ const ProfileScreen = () => {
                 Logout
             </button>
 
-            {/* PostCreator Modal */}
             {isModalOpen && (
                 <PostCreator 
                     isOpen={isModalOpen}

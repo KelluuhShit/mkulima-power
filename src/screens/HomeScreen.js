@@ -4,36 +4,51 @@ import { useAuth } from '../context/AuthContext';
 import ProfileScreen from './ProfileScreen';
 import FeedScreen from './FeedScreen';
 import StoriesScreen from './StoriesScreen';
-import styles from '../styles/Loader.module.css'; // Import styles
-
 const HomeScreen = () => {
     const navigate = useNavigate();
-    const { user } = useAuth(); // Get user from context
+    const { user } = useAuth();
 
-    // Redirect to sign-in page if user is not authenticated
     useEffect(() => {
         if (!user) {
             navigate('/signin', { replace: true });
         }
     }, [user, navigate]);
 
+    // Define styles for the scrollbar
+    const styles = {
+        container: {
+            minHeight: '100vh',
+            backgroundColor: 'rgb(166,212,159)',
+        },
+        scrollableDiv: {
+            overflowY: 'scroll', // Enable scrolling
+            height: '100%', // Take full height
+            scrollbarWidth: 'none', // Firefox
+            msOverflowStyle: 'none', // IE and Edge
+        },
+        // Webkit for Chrome, Safari, and Opera
+        webkitScrollbar: {
+            display: 'none',
+        },
+    };
+
     return (
-        <div className={`min-h-screen bg-[rgb(166,212,159)] ${styles.loaderContainer}`}> {/* Apply styles here */}
+        <div style={styles.container}>
             <div className="flex flex-row justify-around w-full h-screen">
-                {/* ProfileScreen takes up 20% width and scrolls independently */}
-                <div className={`w-1/5 overflow-y-scroll h-full no-scrollbar ${styles.profileScreen}`}>
-                    <ProfileScreen />
-                </div>
+                        {/* ProfileScreen takes up 20% width, hidden on small screens */}
+                        <div className={`w-1/5 hidden md:block`}>
+                            <ProfileScreen />
+                        </div>
 
-                {/* FeedScreen takes up 60% width and scrolls independently */}
-                <div className={`w-3/5 overflow-y-scroll h-full no-scrollbar ${styles.feedScreen}`}>
-                    <FeedScreen />
-                </div>
+                        {/* FeedScreen takes up full width on small screens and 60% width on medium and larger screens */}
+                        <div style={styles.scrollableDiv} className="no-scrollbar w-full md:w-3/5">
+                            <FeedScreen />
+                        </div>
 
-                {/* StoriesScreen takes up 20% width and scrolls independently */}
-                <div className={`w-1/5 overflow-y-scroll h-full no-scrollbar ${styles.storiesScreen}`}>
-                    <StoriesScreen />
-                </div>
+                        {/* StoriesScreen takes up 20% width, hidden on small screens */}
+                        <div className={`w-1/5 hidden md:block`}>
+                            <StoriesScreen />
+                        </div>
             </div>
         </div>
     );
